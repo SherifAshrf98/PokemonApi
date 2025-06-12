@@ -50,6 +50,10 @@ namespace PokemonApi.Infrastructure.Data
                     .HasOne(p => p.Owner)
                     .WithMany(pc => pc.PokemonOwners)
                     .HasForeignKey(c => c.OwnerId);
+
+            //Seeding data
+            SeedData.ApplySeedData(modelBuilder);
+
         }
     }
 }

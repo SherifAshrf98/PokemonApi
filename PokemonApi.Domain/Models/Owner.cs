@@ -7,6 +7,8 @@
         public string LastName { get; set; }
         public string Gym { get; set; }
         public Country Country { get; set; }
+        public int CountryId { get; set; } //Foreign Key
         public ICollection<PokemonOwner> PokemonOwners { get; set; } = new HashSet<PokemonOwner>();
     }
 }
+    
