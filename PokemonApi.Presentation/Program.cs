@@ -1,5 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
+using PokemonApi.Application.Interfaces;
+using PokemonApi.Infrastructure.Interfaces;
 using PokemonApi.Infrastructure.Data;
 
 namespace PokemonApi.Presentation
@@ -17,6 +19,7 @@ namespace PokemonApi.Presentation
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 
