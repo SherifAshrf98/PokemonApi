@@ -18,17 +18,14 @@ namespace PokemonApi.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
-
         public async Task<T> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
-
         public async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -39,12 +36,32 @@ namespace PokemonApi.Infrastructure.Repositories
         {
             _dbContext.Set<T>().Remove(entity);
         }
-
         public async Task<T> FindAsync(Expression<Func<T, bool>> criteria)
         {
             return await _dbContext.Set<T>().FirstOrDefaultAsync(criteria);
         }
+        public async Task<IEnumerable<T>> GetAllWithIncludesAsync(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbContext.Set<T>();
 
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
+        }
+        public async Task<T?> GetWithIncludesAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbContext.Set<T>();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
+        }
     }
 }
 

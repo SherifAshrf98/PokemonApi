@@ -14,6 +14,8 @@ namespace PokemonApi.Infrastructure.Data
         private readonly AppDbContext _dbContext;
         public IRepository<Pokemon> PokemonRepository { get; private set; }
         public IRepository<Country> CountryRepository { get; private set; }
+        public IRepository<Owner> OwnerRepository { get; private set; }
+
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -21,6 +23,8 @@ namespace PokemonApi.Infrastructure.Data
             PokemonRepository = new Repository<Pokemon>(dbContext);
 
             CountryRepository = new Repository<Country>(dbContext);
+
+            OwnerRepository = new Repository<Owner>(dbContext);
         }
         public async Task<int> SaveAsync()
         {

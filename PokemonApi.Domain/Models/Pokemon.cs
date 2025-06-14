@@ -8,6 +8,5 @@
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
         public ICollection<PokemonOwner> PokemonOwners { get; set; } = new HashSet<PokemonOwner>();
         public ICollection<PokemonCategory> PokemonCategories { get; set; } = new HashSet<PokemonCategory>();
-
     }
 }

@@ -12,6 +12,7 @@ namespace PokemonApi.Infrastructure.Interfaces
     {
         public IRepository<Pokemon> PokemonRepository { get; }
         public IRepository<Country> CountryRepository { get; }
+        public IRepository<Owner> OwnerRepository { get; }
         public Task<int> SaveAsync();
     }
 }
