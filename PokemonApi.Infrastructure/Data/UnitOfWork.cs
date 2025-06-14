@@ -13,12 +13,14 @@ namespace PokemonApi.Infrastructure.Data
     {
         private readonly AppDbContext _dbContext;
         public IRepository<Pokemon> PokemonRepository { get; private set; }
-
+        public IRepository<Country> CountryRepository { get; private set; }
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
 
             PokemonRepository = new Repository<Pokemon>(dbContext);
+
+            CountryRepository = new Repository<Country>(dbContext);
         }
         public async Task<int> SaveAsync()
         {

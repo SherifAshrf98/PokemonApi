@@ -28,6 +28,8 @@ namespace PokemonApi.Presentation
 
             builder.Services.AddScoped<IPokemonService, PokemonService>();
 
+            builder.Services.AddScoped<ICountryService, CountryService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

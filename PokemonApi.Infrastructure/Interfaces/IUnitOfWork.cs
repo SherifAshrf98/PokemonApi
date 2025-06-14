@@ -11,6 +11,7 @@ namespace PokemonApi.Infrastructure.Interfaces
     public interface IUnitOfWork
     {
         public IRepository<Pokemon> PokemonRepository { get; }
+        public IRepository<Country> CountryRepository { get; }
         public Task<int> SaveAsync();
     }
 }

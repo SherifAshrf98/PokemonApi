@@ -50,9 +50,9 @@ namespace PokemonApi.Presentation.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _pokemonService.AddPokemonAsync(createPokemonDto);
+            var AddedPokemon = await _pokemonService.AddPokemonAsync(createPokemonDto);
 
-            return Ok(result);
+            return CreatedAtAction(nameof(GetPokemon), new { pokemonId = AddedPokemon.Id }, AddedPokemon);
         }
 
         [HttpPut("{id}")]
