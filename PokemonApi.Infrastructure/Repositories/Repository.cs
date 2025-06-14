@@ -51,7 +51,7 @@ namespace PokemonApi.Infrastructure.Repositories
 
             return await query.ToListAsync();
         }
-        public async Task<T?> GetWithIncludesAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        public async Task<T> GetWithIncludesAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbContext.Set<T>();
 

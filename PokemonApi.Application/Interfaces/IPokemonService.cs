@@ -18,5 +18,6 @@ namespace PokemonApi.Application.Interfaces
         Task<bool> UpdatePokemonAsync(int id, UpdatePokemonDto updatePokemonDto);
 
         Task<bool> DeletePokemonAsync(int id);
+
     }
 }

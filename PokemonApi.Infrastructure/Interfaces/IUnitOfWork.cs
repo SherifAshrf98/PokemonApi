@@ -10,7 +10,10 @@ namespace PokemonApi.Infrastructure.Interfaces
 
     public interface IUnitOfWork
     {
-        public IRepository<Pokemon> PokemonRepository { get; }
+        public IPokemonRepository PokemonRepository { get; }
+        public IReviewRepository ReviewRepository { get; }
+        public IPokemonOwnerRepository PokemonOwners { get; }
+        public IPokemonCategoryRepository PokemonCategories { get; }
         public IRepository<Country> CountryRepository { get; }
         public IRepository<Owner> OwnerRepository { get; }
         public Task<int> SaveAsync();
