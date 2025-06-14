@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace PokemonApi.Infrastructure.Interfaces
 {
+
     public interface IUnitOfWork
     {
-        Task<int> SaveAsync();
+        public IRepository<Pokemon> PokemonRepository { get; }
+        public Task<int> SaveAsync();
     }
 }

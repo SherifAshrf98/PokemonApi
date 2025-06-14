@@ -12,15 +12,17 @@ namespace PokemonApi.Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _dbContext;
+        public IRepository<Pokemon> PokemonRepository { get; private set; }
 
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
 
+            PokemonRepository = new Repository<Pokemon>(dbContext);
         }
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            return _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

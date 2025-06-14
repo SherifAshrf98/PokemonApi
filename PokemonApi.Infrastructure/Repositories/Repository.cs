@@ -4,6 +4,7 @@ using PokemonApi.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,14 +31,20 @@ namespace PokemonApi.Infrastructure.Repositories
 
         public async Task<T> AddAsync(T entity)
         {
-            var id = await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.Set<T>().AddAsync(entity);
 
             return entity;
         }
         public void Remove(T entity)
         {
-            _dbContext.Set<T>().Remove(entity); 
+            _dbContext.Set<T>().Remove(entity);
         }
+
+        public async Task<T> FindAsync(Expression<Func<T, bool>> criteria)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(criteria);
+        }
+
     }
 }
 

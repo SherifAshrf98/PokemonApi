@@ -1,8 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using PokemonApi.Application.Interfaces;
-using PokemonApi.Infrastructure.Interfaces;
+using PokemonApi.Application.Services;
 using PokemonApi.Infrastructure.Data;
+using PokemonApi.Infrastructure.Interfaces;
+using PokemonApi.Presentation.Middlewares;
 
 namespace PokemonApi.Presentation
 {
@@ -14,12 +16,17 @@ namespace PokemonApi.Presentation
 
             // Add services to the container.
             builder.Services.AddControllers();
+
             builder.Services.AddOpenApi();
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped<IPokemonService, PokemonService>();
 
             var app = builder.Build();
 
@@ -31,8 +38,9 @@ namespace PokemonApi.Presentation
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
