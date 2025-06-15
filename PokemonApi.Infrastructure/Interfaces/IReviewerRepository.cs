@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace PokemonApi.Infrastructure.Interfaces
 {
-    public interface IPokemonRepository : IRepository<Pokemon>
+    public interface IReviewerRepository : IRepository<Reviewer>
     {
-        Task<Pokemon> GetPokmeonWithReviews(int id);
-    }
 
+    }
 
 }

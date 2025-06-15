@@ -1,4 +1,6 @@
 ﻿using PokemonApi.Application.Dtos.PokemonDtos;
+using PokemonApi.Application.Dtos.Reviews;
+using PokemonApi.Application.Dtos.ReviewsDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,12 @@ namespace PokemonApi.Application.Interfaces
         Task<bool> UpdatePokemonAsync(int id, UpdatePokemonDto updatePokemonDto);
 
         Task<bool> DeletePokemonAsync(int id);
+
+        Task<IEnumerable<ReviewDto>> GetReviewsAsync(int Pokemonid);
+
+        Task<ReviewDto> AddReviewAsync(int Pokemonid, CreateReviewDto createReviewDto);
+
+        Task<bool> DeleteReviewAsync(int pokemonid, int Reviewid);
 
     }
 }

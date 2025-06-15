@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Update.Internal;
 using PokemonApi.Application.Dtos.PokemonDtos;
+using PokemonApi.Application.Dtos.Reviews;
+using PokemonApi.Application.Dtos.ReviewsDtos;
 using PokemonApi.Application.Interfaces;
 using PokemonApi.Infrastructure.Interfaces;
 using PokemonReviewApp.Models;
@@ -107,6 +109,75 @@ namespace PokemonApi.Application.Services
 
             _unitOfWork.PokemonRepository.Remove(pokemon);
 
+            await _unitOfWork.SaveAsync();
+
+            return true;
+        }
+
+        public async Task<IEnumerable<ReviewDto>> GetReviewsAsync(int Pokemonid)
+        {
+            var Pokemon = await _unitOfWork.PokemonRepository.GetPokmeonWithReviews(Pokemonid);
+
+            if (Pokemon is null)
+                throw new KeyNotFoundException("Pokemon not Found");
+
+            var Reviews = Pokemon.Reviews.Select(r => new ReviewDto
+            {
+                Id = r.Id,
+                Title = r.Title,
+                Text = r.Text,
+                Rating = r.Rating,
+                PokemonId = Pokemonid,
+                ReviewerId = r.Reviewer.Id,
+            });
+
+            return Reviews;
+        }
+
+        public async Task<ReviewDto> AddReviewAsync(int Pokemonid, CreateReviewDto createReviewDto)
+        {
+            var Pokemon = await _unitOfWork.PokemonRepository.GetByIdAsync(Pokemonid);
+
+            if (Pokemon is null)
+                throw new KeyNotFoundException($"Pokemon not Found");
+
+            var Reviewr = await _unitOfWork.ReviewerRepository.GetByIdAsync(createReviewDto.ReviewerId);
+
+            if (Reviewr is null)
+                throw new KeyNotFoundException($"Reviewer not Found");
+
+            var NewReview = new Review
+            {
+                Title = createReviewDto.Title,
+                Text = createReviewDto.Text,
+                Rating = createReviewDto.Rating,
+                PokemonId = Pokemonid,
+                ReviewerId = createReviewDto.ReviewerId
+            };
+
+            var AddedReview = await _unitOfWork.ReviewRepository.AddAsync(NewReview);
+
+            await _unitOfWork.SaveAsync();
+
+            return new ReviewDto
+            {
+                Id = AddedReview.Id,
+                Title = AddedReview.Title,
+                Text = AddedReview.Text,
+                Rating = AddedReview.Rating,
+                PokemonId = Pokemonid,
+                ReviewerId = AddedReview.ReviewerId
+            };
+        }
+
+        public async Task<bool> DeleteReviewAsync(int pokemonid, int Reviewid)
+        {
+            var review = await _unitOfWork.ReviewRepository.FindAsync(r => r.Id == Reviewid && r.PokemonId == pokemonid);
+
+            if (review is null)
+                return false;
+
+            _unitOfWork.ReviewRepository.Remove(review);
             await _unitOfWork.SaveAsync();
 
             return true;

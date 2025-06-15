@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PokemonApi.Infrastructure.Interfaces
 {
 
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         public IPokemonRepository PokemonRepository { get; }
         public IReviewRepository ReviewRepository { get; }
@@ -16,6 +16,7 @@ namespace PokemonApi.Infrastructure.Interfaces
         public IPokemonCategoryRepository PokemonCategories { get; }
         public IRepository<Country> CountryRepository { get; }
         public IRepository<Owner> OwnerRepository { get; }
+        public IRepository<Reviewer> ReviewerRepository { get; }
         public Task<int> SaveAsync();
     }
 }

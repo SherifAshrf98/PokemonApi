@@ -16,6 +16,8 @@ namespace PokemonApi.Infrastructure.Data
 
         public IRepository<Owner> OwnerRepository { get; private set; }
 
+        public IRepository<Reviewer> ReviewerRepository { get; private set; }
+
         public IPokemonRepository PokemonRepository { get; private set; }
 
         public IReviewRepository ReviewRepository { get; private set; }
@@ -23,6 +25,7 @@ namespace PokemonApi.Infrastructure.Data
         public IPokemonOwnerRepository PokemonOwners { get; private set; }
 
         public IPokemonCategoryRepository PokemonCategories { get; private set; }
+
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -39,10 +42,17 @@ namespace PokemonApi.Infrastructure.Data
             CountryRepository = new Repository<Country>(dbContext);
 
             OwnerRepository = new Repository<Owner>(dbContext);
+
+            ReviewerRepository = new Repository<Reviewer>(dbContext);
         }
         public async Task<int> SaveAsync()
         {
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _dbContext.Dispose();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.PokemonDtos;
+using PokemonApi.Application.Dtos.ReviewsDtos;
 using PokemonApi.Application.Interfaces;
 using System.Threading.Tasks;
 
@@ -79,6 +80,46 @@ namespace PokemonApi.Presentation.Controllers
 
             if (!result)
                 return NotFound("The Pokemon You are trying to Delete is not found !");
+
+            return NoContent();
+        }
+
+        [HttpGet("{id}/Reviews")]
+        public async Task<IActionResult> GetReviews(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var Reviews = await _pokemonService.GetReviewsAsync(id);
+
+            if (Reviews == null)
+
+                return NotFound("No Reviews found");
+
+            return Ok(Reviews);
+        }
+
+        [HttpPost("{id}/Reviews")]
+        public async Task<IActionResult> AddReview(int id, CreateReviewDto createReviewDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var review = await _pokemonService.AddReviewAsync(id, createReviewDto);
+
+            return CreatedAtAction(nameof(GetReviews), new { id = review.PokemonId }, review);
+        }
+
+        [HttpDelete("{pokemonid}/Reviews/{reviewid}")]
+        public async Task<IActionResult> DeleteReview(int pokemonid, int reviewid)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _pokemonService.DeleteReviewAsync(pokemonid, reviewid);
+
+            if (!result)
+                return NotFound("review not found");
 
             return NoContent();
         }

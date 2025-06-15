@@ -1,4 +1,5 @@
-﻿using PokemonApi.Infrastructure.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PokemonApi.Infrastructure.Data;
 using PokemonApi.Infrastructure.Interfaces;
 using PokemonReviewApp.Models;
 using System;
@@ -11,13 +12,17 @@ namespace PokemonApi.Infrastructure.Repositories
 {
     public class PokemonRepository : Repository<Pokemon>, IPokemonRepository
     {
-        public PokemonRepository(AppDbContext DbContext) : base(DbContext) { }
+        private readonly AppDbContext _dbContext;
 
+        public PokemonRepository(AppDbContext DbContext) : base(DbContext)
+        {
+            _dbContext = DbContext;
+        }
 
-
-
-
-
+        public async Task<Pokemon> GetPokmeonWithReviews(int id)
+        {
+            return await _dbContext.Pokemons.Include(p => p.Reviews).ThenInclude(r => r.Reviewer).FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 
 }
