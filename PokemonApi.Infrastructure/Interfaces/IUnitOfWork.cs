@@ -16,6 +16,7 @@ namespace PokemonApi.Infrastructure.Interfaces
         public IPokemonCategoryRepository PokemonCategories { get; }
         public IRepository<Country> CountryRepository { get; }
         public IRepository<Owner> OwnerRepository { get; }
+        public IRepository<Category> CategoryRepository { get; }
         public IRepository<Reviewer> ReviewerRepository { get; }
         public Task<int> SaveAsync();
     }

@@ -18,6 +18,8 @@ namespace PokemonApi.Infrastructure.Data
 
         public IRepository<Reviewer> ReviewerRepository { get; private set; }
 
+        public IRepository<Category> CategoryRepository { get; private set; }
+
         public IPokemonRepository PokemonRepository { get; private set; }
 
         public IReviewRepository ReviewRepository { get; private set; }
@@ -44,6 +46,8 @@ namespace PokemonApi.Infrastructure.Data
             OwnerRepository = new Repository<Owner>(dbContext);
 
             ReviewerRepository = new Repository<Reviewer>(dbContext);
+
+            CategoryRepository = new Repository<Category>(dbContext);
         }
         public async Task<int> SaveAsync()
         {
