@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Infrastructure.Interfaces
+namespace PokemonApi.Application.Interfaces.Repositories
 {
     public interface IReviewerRepository : IRepository<Reviewer>
     {

@@ -1,9 +1,9 @@
 
+using PokemonApi.Application.Interfaces.Repositories;
+using PokemonApi.Application.Interfaces.Services;
+using PokemonApi.Infrastructure.Implementation.Services;
 using Microsoft.EntityFrameworkCore;
-using PokemonApi.Application.Interfaces;
-using PokemonApi.Application.Services;
 using PokemonApi.Infrastructure.Data;
-using PokemonApi.Infrastructure.Interfaces;
 using PokemonApi.Presentation.Middlewares;
 
 namespace PokemonApi.Presentation

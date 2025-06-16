@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.CountryDtos;
-using PokemonApi.Application.Interfaces;
+using PokemonApi.Application.Interfaces.Services;
 
 namespace PokemonApi.Presentation.Controllers
 {

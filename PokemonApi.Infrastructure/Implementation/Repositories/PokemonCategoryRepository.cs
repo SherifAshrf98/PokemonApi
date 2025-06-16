@@ -1,8 +1,8 @@
-﻿using PokemonApi.Infrastructure.Data;
-using PokemonApi.Infrastructure.Interfaces;
+﻿using PokemonApi.Application.Interfaces.Repositories;
+using PokemonApi.Infrastructure.Data;
 using PokemonReviewApp.Models;
 
-namespace PokemonApi.Infrastructure.Repositories
+namespace PokemonApi.Infrastructure.Implementation.Repositories
 {
     public class PokemonCategoryRepository : Repository<PokemonCategory>, IPokemonCategoryRepository
     {

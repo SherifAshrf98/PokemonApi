@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Infrastructure.Interfaces
+namespace PokemonApi.Application.Interfaces.Repositories
 {
     public interface IRepository<T> where T : class
     {

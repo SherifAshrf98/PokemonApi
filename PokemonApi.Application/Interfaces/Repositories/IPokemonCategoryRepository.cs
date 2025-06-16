@@ -1,6 +1,6 @@
 ﻿using PokemonReviewApp.Models;
 
-namespace PokemonApi.Infrastructure.Interfaces
+namespace PokemonApi.Application.Interfaces.Repositories
 {
     public interface IPokemonCategoryRepository : IRepository<PokemonCategory>
     {

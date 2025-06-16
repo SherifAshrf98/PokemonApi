@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.CategoryDtos;
-using PokemonApi.Application.Interfaces;
+using PokemonApi.Application.Interfaces.Repositories;
+using PokemonApi.Application.Interfaces.Services;
 using PokemonReviewApp.Models;
 
 namespace PokemonApi.Presentation.Controllers

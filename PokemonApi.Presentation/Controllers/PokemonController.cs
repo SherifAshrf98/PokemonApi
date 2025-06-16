@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.PokemonDtos;
 using PokemonApi.Application.Dtos.ReviewsDtos;
-using PokemonApi.Application.Interfaces;
+using PokemonApi.Application.Interfaces.Services;
 using System.Threading.Tasks;
 
 namespace PokemonApi.Presentation.Controllers

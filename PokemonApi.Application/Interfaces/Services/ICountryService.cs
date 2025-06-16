@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Application.Interfaces
+namespace PokemonApi.Application.Interfaces.Services
 {
     public interface ICountryService
     {

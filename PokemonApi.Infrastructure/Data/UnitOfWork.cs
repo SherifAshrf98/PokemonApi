@@ -1,5 +1,5 @@
-﻿using PokemonApi.Infrastructure.Interfaces;
-using PokemonApi.Infrastructure.Repositories;
+﻿using PokemonApi.Application.Interfaces.Repositories;
+using PokemonApi.Infrastructure.Implementation.Repositories;
 using PokemonReviewApp.Models;
 using System;
 using System.Collections.Generic;

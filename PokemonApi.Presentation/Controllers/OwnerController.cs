@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.OwnerDtos;
-using PokemonApi.Application.Interfaces;
+using PokemonApi.Application.Interfaces.Services;
 using System.Runtime.InteropServices;
 
 namespace PokemonApi.Presentation.Controllers

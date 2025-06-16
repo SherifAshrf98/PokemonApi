@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonApi.Application.Interfaces.Repositories;
 using PokemonApi.Infrastructure.Data;
-using PokemonApi.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Infrastructure.Repositories
+namespace PokemonApi.Infrastructure.Implementation.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {

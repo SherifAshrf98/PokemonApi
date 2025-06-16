@@ -2,8 +2,8 @@
 using PokemonApi.Application.Dtos.PokemonDtos;
 using PokemonApi.Application.Dtos.Reviews;
 using PokemonApi.Application.Dtos.ReviewsDtos;
-using PokemonApi.Application.Interfaces;
-using PokemonApi.Infrastructure.Interfaces;
+using PokemonApi.Application.Interfaces.Repositories;
+using PokemonApi.Application.Interfaces.Services;
 using PokemonReviewApp.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Application.Services
+namespace PokemonApi.Infrastructure.Implementation.Services
 {
     public class PokemonService : IPokemonService
     {
