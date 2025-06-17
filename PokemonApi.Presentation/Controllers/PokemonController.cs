@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Application.Dtos.PokemonDtos;
 using PokemonApi.Application.Dtos.ReviewsDtos;
@@ -18,6 +19,7 @@ namespace PokemonApi.Presentation.Controllers
             _pokemonService = pokemonService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllPokemons()
         {
