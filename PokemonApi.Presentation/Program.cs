@@ -23,8 +23,6 @@ namespace PokemonApi.Presentation
             // Add services to the container.
             builder.Services.AddControllers();
 
-            builder.Services.AddOpenApi();
-
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -68,7 +66,6 @@ namespace PokemonApi.Presentation
 
             });
 
-
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             #region Register Application Services
@@ -90,7 +87,7 @@ namespace PokemonApi.Presentation
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+
             }
 
             app.UseHttpsRedirection();

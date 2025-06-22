@@ -81,6 +81,5 @@ namespace PokemonApi.Presentation.Controllers
 
             return NoContent();
         }
-
     }
 }
