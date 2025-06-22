@@ -69,11 +69,12 @@ namespace PokemonApi.Presentation
             });
 
 
-            builder.Services.AddScoped<AuthService>();
-
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             #region Register Application Services
+            
+            builder.Services.AddScoped<AuthService>();
+
             builder.Services.AddScoped<IPokemonService, PokemonService>();
 
             builder.Services.AddScoped<ICountryService, CountryService>();

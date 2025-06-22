@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Update.Internal;
+using PokemonApi.Application.Dtos.CategoryDtos;
 using PokemonApi.Application.Dtos.PokemonDtos;
 using PokemonApi.Application.Dtos.Reviews;
 using PokemonApi.Application.Dtos.ReviewsDtos;
@@ -181,6 +182,23 @@ namespace PokemonApi.Infrastructure.Implementation.Services
             await _unitOfWork.SaveAsync();
 
             return true;
+        }
+
+        public async Task<PokemonWithCategoriesDto> GetCategoriesAsync(int pokemonid)
+        {
+            var Pokemon = await _unitOfWork.PokemonRepository.GetPokemonWithCategories(pokemonid);
+            if (Pokemon is null)
+                return null;
+
+            var PokemonDto = new PokemonWithCategoriesDto
+            {
+                Id = Pokemon.Id,
+                Birthdate = Pokemon.BirthDate,
+                Name = Pokemon.Name,
+                Categories = Pokemon.PokemonCategories.Select(pc => pc.Category.Name).ToList()
+
+            };
+            return PokemonDto;
         }
     }
 }

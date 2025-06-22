@@ -125,5 +125,17 @@ namespace PokemonApi.Presentation.Controllers
 
             return NoContent();
         }
+
+
+        [HttpGet("{pokemonid}/Category")]
+        public async Task<IActionResult> GetCategories(int pokemonid)
+        {
+            var pokemon = await _pokemonService.GetCategoriesAsync(pokemonid);
+
+            if (pokemon == null) return NotFound("Pokemon Not Found");
+
+            return Ok(pokemon);
+
+        }
     }
 }

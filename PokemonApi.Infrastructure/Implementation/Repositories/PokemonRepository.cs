@@ -23,6 +23,12 @@ namespace PokemonApi.Infrastructure.Implementation.Repositories
         {
             return await _dbContext.Pokemons.Include(p => p.Reviews).ThenInclude(r => r.Reviewer).FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<Pokemon> GetPokemonWithCategories(int id)
+        {
+            return await _dbContext.Pokemons.Include(p => p.PokemonCategories).ThenInclude(pc => pc.Category).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
     }
 
 }

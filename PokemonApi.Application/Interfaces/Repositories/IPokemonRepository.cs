@@ -10,6 +10,8 @@ namespace PokemonApi.Application.Interfaces.Repositories
     public interface IPokemonRepository : IRepository<Pokemon>
     {
         Task<Pokemon> GetPokmeonWithReviews(int id);
+
+        Task<Pokemon> GetPokemonWithCategories(int id);
     }
 
 

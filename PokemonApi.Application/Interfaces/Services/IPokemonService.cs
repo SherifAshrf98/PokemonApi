@@ -1,4 +1,5 @@
-﻿using PokemonApi.Application.Dtos.PokemonDtos;
+﻿using PokemonApi.Application.Dtos.CategoryDtos;
+using PokemonApi.Application.Dtos.PokemonDtos;
 using PokemonApi.Application.Dtos.Reviews;
 using PokemonApi.Application.Dtos.ReviewsDtos;
 using System;
@@ -26,6 +27,8 @@ namespace PokemonApi.Application.Interfaces.Services
         Task<ReviewDto> AddReviewAsync(int Pokemonid, CreateReviewDto createReviewDto);
 
         Task<bool> DeleteReviewAsync(int pokemonid, int Reviewid);
+
+        Task<PokemonWithCategoriesDto> GetCategoriesAsync(int pokemonid);
 
     }
 }
