@@ -11,96 +11,95 @@ using Microsoft.IdentityModel.Tokens;
 using PokemonApi.Presentation.Helpers;
 using System.Text;
 using PokemonApi.Infrastructure.Implementation.Services.Security;
+using Carter;
 
 namespace PokemonApi.Presentation
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllers();
+			// Add services to the container.
+			builder.Services.AddControllers();
 
-            builder.Services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+			builder.Services.AddCarter();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-            })
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+			builder.Services.AddDbContext<AppDbContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+			});
+
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+			builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+			{
+				options.Password.RequireDigit = false;
+				options.Password.RequiredLength = 5;
+				options.Password.RequireLowercase = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequireNonAlphanumeric = false;
+			})
+				.AddEntityFrameworkStores<AppDbContext>()
+				.AddDefaultTokenProviders();
+
+			builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("jwtConfig"));
+
+			builder.Services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+			}).AddJwtBearer(options =>
+			{
+				var JwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
+				var key = Encoding.UTF8.GetBytes(JwtConfig.Key);
+
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidIssuer = JwtConfig.Issuer,
+					ValidAudience = JwtConfig.Audience,
+					IssuerSigningKey = new SymmetricSecurityKey(key),
+					ValidateIssuer = true,
+					ValidateAudience = true,
+					ValidateIssuerSigningKey = true,
+					ClockSkew = TimeSpan.Zero
+				};
+
+			});
 
 
-            builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("jwtConfig"));
+			#region Register Application Services
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+			builder.Services.AddScoped<AuthService>();
 
-            }).AddJwtBearer(options =>
-            {
-                var JwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
-                var key = Encoding.UTF8.GetBytes(JwtConfig.Key);
+			builder.Services.AddScoped<IPokemonService, PokemonService>();
 
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = JwtConfig.Issuer,
-                    ValidAudience = JwtConfig.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero
-                };
+			builder.Services.AddScoped<ICountryService, CountryService>();
 
-            });
+			builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddScoped<IOwnerService, OwnerService>();
 
-            #region Register Application Services
-            
-            builder.Services.AddScoped<AuthService>();
+			#endregion
 
-            builder.Services.AddScoped<IPokemonService, PokemonService>();
+			var app = builder.Build();
 
-            builder.Services.AddScoped<ICountryService, CountryService>();
+			app.UseHttpsRedirection();
 
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
+			app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            builder.Services.AddScoped<IOwnerService, OwnerService>();
+			app.UseAuthentication();
 
-            #endregion
+			app.UseAuthorization();
 
-            var app = builder.Build();
+			app.MapControllers();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+			app.MapCarter();
 
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
+			app.Run();
+		}
+	}
 }
